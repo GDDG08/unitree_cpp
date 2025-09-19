@@ -311,8 +311,9 @@ void UnitreeController::set_gains(const std::vector<double>& stiffness, const st
 }
 
 void UnitreeController::shutdown() {
-    set_gains(std::vector<double>(num_dofs_, 0.0), std::vector<double>(num_dofs_, 5.0));
     std::cout << "Shutting down UnitreeController..." << std::endl;
+    set_gains(std::vector<double>(num_dofs_, 0.0), std::vector<double>(num_dofs_, 5.0));
+    step(std::vector<double>(num_dofs_, 0.0));
 }
 
 RobotState UnitreeController::get_robot_state() {
