@@ -3,7 +3,7 @@
 
 <div align="center">
 
-<img src="asset/image.png" alt="image" style="zoom:50%;" />
+<img src="asset/image.png" alt="image" style="zoom:60%;" />
 
 </div>
 
