@@ -1,19 +1,13 @@
 # Unitree Cpp
 @GDDG80
 
-<div align="center">
-
-<img src="asset/image.png" alt="image" style="zoom:60%;" />
-
-</div>
-
 A lightweight Python binding for **Unitree SDK2**, designed to overcome the performance issues of the official `unitree_sdk2_python` on the **Unitree G1** (Jetson Orin).  
 
 **FREE YOUR UNITREE G1 FROM THE ETHERNET CABLE!**
 
 <div align="center">
 
-<img src="asset/image.png" width="30%"/>
+<img src="asset/image.png" width="50%"/>
 
 </div>
 
