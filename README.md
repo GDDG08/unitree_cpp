@@ -11,6 +11,11 @@ A lightweight Python binding for **Unitree SDK2**, designed to overcome the perf
 
 **FREE YOUR UNITREE G1 FROM THE ETHERNET CABLE!**
 
+<div align="center">
+
+<img src="asset/image.png" width="30%"/>
+
+</div>
 
 ## Inspiration
 
@@ -24,14 +29,15 @@ This project provides the best of both worlds:
 
 As a result, you can write simple control code in Python, without dealing with the C++ compilation, while still ensuring real-time performance.
 
-We tested the runtime performance of the G1 robot under [AMO](https://github.com/OpenTeleVision/AMO) using both Unitree_sdk_python and our UnitreeCpp environments. The results are as follows:
+
+We tested the performance of `unitree_cpp` with [AMO](https://github.com/OpenTeleVision/AMO) on G1 pc2. The results are as follows:
 
 <div align="center">
 
-| Implementation      | Cost (μs/hit) |
+| Implementation      | Cost of control (μs/hit) |
 |---------------------|---------------|
-| UnitreeCpp          | 40.045        |
-| Unitree_python_sdk  | 3871.039      |
+| `unitree_sdk2_python`  | 3871.039      |
+| `unitree_cpp`          | 40.045        |
 
 </div>
 
