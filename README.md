@@ -5,6 +5,8 @@ A lightweight Python binding for **Unitree SDK2**, designed to overcome the perf
 
 **FREE YOUR UNITREE G1 FROM THE ETHERNET CABLE!**
 
+> **News 🎉: Our Deployment Framework is released at [RoboJuDo](https://github.com/GDDG08/RoboJuDo), try it out!**
+
 <div align="center">
 
 <img src="asset/image.png" width="50%"/>
