@@ -4,7 +4,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "unitree_cpp"
-version = "1.0.2"
+version = "1.0.3"
 description = "Pybind11 binding for UnitreeController with Unitree SDK"
 authors = [{ name = "GDDG08", email = "GDDG80@outlook.com" }]
 license = { text = "CC-BY-4.0" }
