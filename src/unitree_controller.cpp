@@ -264,6 +264,7 @@ void UnitreeController::step(const std::vector<double>& actions) {
         // motor_command_tmp.tau_ff.at(i) = 0.0;
     }
     motor_command_buffer_.SetData(motor_command_tmp);
+    LowCommandWriter(); // immediately send command
 }
 
 void UnitreeController::step_hands(const std::vector<double>& l_hand_pose, const std::vector<double>& r_hand_pose) {
@@ -291,6 +292,7 @@ void UnitreeController::step_hands(const std::vector<double>& l_hand_pose, const
         hand_command_right_tmp.tau_ff.at(i) = 0.0f;
     }
     hand_command_right_buffer_.SetData(hand_command_right_tmp);
+    HandCommandWriter(); // immediately send command
 }
 
 void UnitreeController::set_gains(const std::vector<double>& stiffness, const std::vector<double>& damping) {
@@ -308,6 +310,7 @@ void UnitreeController::set_gains(const std::vector<double>& stiffness, const st
     for (const auto& d : damping_) {
         std::cout << d << " ";
     }
+    std::cout << "]" << std::endl;
 }
 
 void UnitreeController::shutdown() {

@@ -1,16 +1,16 @@
 # Unitree Cpp
-@GDDG80
 
 A lightweight Python binding for **Unitree SDK2**, designed to overcome the performance issues of the official `unitree_sdk2_python` on the **Unitree G1** (Jetson Orin).  
 
 **FREE YOUR UNITREE G1 FROM THE ETHERNET CABLE!**
 
-> **News 🎉: Our Deployment Framework is released at [RoboJuDo](https://github.com/GDDG08/RoboJuDo), try it out!**
+<div align="center">
+<h3><strong>News 🎉: Our Deployment Framework is released at <a href="https://github.com/GDDG08/RoboJuDo">RoboJuDo</a>, try it out!</strong></h3>
+<br>
+</div>
 
 <div align="center">
-
 <img src="asset/image.png" width="50%"/>
-
 </div>
 
 ## Inspiration
@@ -70,6 +70,16 @@ This project supports:
 - **Unitree G1**  
 - **Dex-3 hand**  
 - **Odometry service**  
+
+## CHANGELOG
+
+**1.0.2**
+- Fix: shutdown as damping mode
+
+**1.0.3 [IMPORTANT FIX]**
+- Fix control delay, send command immediately after step.
+    - this bug could lead to jittering and stability issue, see https://github.com/GDDG08/RoboJuDo/issues/2
+
 
 ## License
 
