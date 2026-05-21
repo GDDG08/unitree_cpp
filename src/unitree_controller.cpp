@@ -67,7 +67,7 @@ UnitreeController::UnitreeController(const UnitreeConfig& cfg)
 
     if (cfg_.enable_torso_imu) {
         std::cout << "Torso IMU enabled, subscribing to topic: " << cfg_.torso_imu_topic << std::endl;
-        torso_imu_subscriber_.reset(new ChannelSubscriber<IMUState_>(cfg_.torso_imu_topic));
+        torso_imu_subscriber_.reset(new ChannelSubscriber<unitree_hg::msg::dds_::IMUState_>(cfg_.torso_imu_topic));
         torso_imu_subscriber_->InitChannel(std::bind(&UnitreeController::TorsoImuStateHandler, this, std::placeholders::_1), 1);
     } else {
         std::cout << "Torso IMU disabled." << std::endl;
@@ -182,6 +182,7 @@ void UnitreeController::LowStateHandler(const void* message) {
 }
 
 void UnitreeController::TorsoImuStateHandler(const void* message) {
+    using unitree_hg::msg::dds_::IMUState_;
     const IMUState_& dds_imu = *(const IMUState_*)message;
 
     ImuState imu_tmp;

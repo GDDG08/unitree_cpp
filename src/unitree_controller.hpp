@@ -190,7 +190,7 @@ class UnitreeController {
 
     ChannelSubscriberPtr<LowState_> lowstate_subscriber_;
     ChannelPublisherPtr<LowCmd_> lowcmd_publisher_;
-    ChannelSubscriberPtr<IMUState_> torso_imu_subscriber_;
+    ChannelSubscriberPtr<unitree_hg::msg::dds_::IMUState_> torso_imu_subscriber_;
     ThreadPtr command_writer_ptr_;
 
     ChannelSubscriberPtr<unitree_go::msg::dds_::SportModeState_> estimate_state_subscriber;
