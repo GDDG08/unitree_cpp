@@ -18,6 +18,8 @@ void bind_UnitreeConfig(py::module_& m) {
         .def_readwrite("lowstate_topic", &UnitreeConfig::lowstate_topic)
         .def_readwrite("enable_odometry", &UnitreeConfig::enable_odometry)
         .def_readwrite("sport_state_topic", &UnitreeConfig::sport_state_topic)
+        .def_readwrite("enable_torso_imu", &UnitreeConfig::enable_torso_imu)
+        .def_readwrite("torso_imu_topic", &UnitreeConfig::torso_imu_topic)
         .def_readwrite("stiffness", &UnitreeConfig::stiffness)
         .def_readwrite("damping", &UnitreeConfig::damping)
         .def_readwrite("num_dofs", &UnitreeConfig::num_dofs);
@@ -42,6 +44,7 @@ void bind_RobotState(py::module_& m) {
         .def_readwrite("tick", &RobotState::tick)
         .def_readwrite("motor_state", &RobotState::motor_state)
         .def_readwrite("imu_state", &RobotState::imu_state)
+        .def_readwrite("torso_imu_state", &RobotState::torso_imu_state)
         // .def_readwrite("wireless_remote", &RobotState::wireless_remote);
         .def_property(
             "wireless_remote",
@@ -76,6 +79,12 @@ void bind_UnitreeController(py::module_& m) {
             cfg.lowstate_topic = cfg_dict["lowstate_topic"].cast<std::string>();
             cfg.sport_state_topic = cfg_dict["sport_state_topic"].cast<std::string>();
             cfg.enable_odometry = cfg_dict["enable_odometry"].cast<bool>();
+            cfg.enable_torso_imu = cfg_dict.contains("enable_torso_imu")
+                                       ? cfg_dict["enable_torso_imu"].cast<bool>()
+                                       : true;
+            cfg.torso_imu_topic = cfg_dict.contains("torso_imu_topic")
+                                      ? cfg_dict["torso_imu_topic"].cast<std::string>()
+                                      : std::string("rt/secondary_imu");
             cfg.stiffness = cfg_dict["stiffness"].cast<std::vector<double>>();
             cfg.damping = cfg_dict["damping"].cast<std::vector<double>>();
             cfg.num_dofs = cfg_dict["num_dofs"].cast<unsigned short>();

@@ -64,8 +64,14 @@ UnitreeController::UnitreeController(const UnitreeConfig& cfg)
     lowcmd_publisher_->InitChannel();
     lowstate_subscriber_.reset(new ChannelSubscriber<LowState_>(cfg_.lowstate_topic));
     lowstate_subscriber_->InitChannel(std::bind(&UnitreeController::LowStateHandler, this, std::placeholders::_1), 1);
-    // imutorso_subscriber_.reset(new ChannelSubscriber<IMUState_>(HG_IMU_TORSO));
-    // imutorso_subscriber_->InitChannel(std::bind(&UnitreeController::imuTorsoHandler, this, std::placeholders::_1), 1);
+
+    if (cfg_.enable_torso_imu) {
+        std::cout << "Torso IMU enabled, subscribing to topic: " << cfg_.torso_imu_topic << std::endl;
+        torso_imu_subscriber_.reset(new ChannelSubscriber<IMUState_>(cfg_.torso_imu_topic));
+        torso_imu_subscriber_->InitChannel(std::bind(&UnitreeController::TorsoImuStateHandler, this, std::placeholders::_1), 1);
+    } else {
+        std::cout << "Torso IMU disabled." << std::endl;
+    }
 
     if (cfg_.enable_odometry) {
         std::cout << "Odometry enabled, subscribing to sport state topic: " << cfg_.sport_state_topic << std::endl;
@@ -157,6 +163,14 @@ void UnitreeController::LowStateHandler(const void* message) {
     memcpy(&robot_state_tmp.wireless_remote, &low_state.wireless_remote()[0], 40);
     // std::cout << "imu rpy: " << imu_tmp.rpy[0] << ", " << imu_tmp.rpy[1] << ", " << imu_tmp.rpy[2] << std::endl;
 
+    // attach the most recent torso IMU sample (if available); otherwise leave default identity
+    if (cfg_.enable_torso_imu) {
+        const std::shared_ptr<const ImuState> torso_imu = torso_imu_state_buffer_.GetData();
+        if (torso_imu) {
+            robot_state_tmp.torso_imu_state = *torso_imu;
+        }
+    }
+
     robot_state_buffer_.SetData(robot_state_tmp);
 
     // update mode machine
@@ -165,6 +179,17 @@ void UnitreeController::LowStateHandler(const void* message) {
             std::cout << "G1 type: " << unsigned(low_state.mode_machine()) << std::endl;
         mode_machine_ = low_state.mode_machine();
     }
+}
+
+void UnitreeController::TorsoImuStateHandler(const void* message) {
+    const IMUState_& dds_imu = *(const IMUState_*)message;
+
+    ImuState imu_tmp;
+    imu_tmp.rpy = dds_imu.rpy();
+    imu_tmp.gyroscope = dds_imu.gyroscope();
+    imu_tmp.quaternion = dds_imu.quaternion();
+    imu_tmp.accelerometer = dds_imu.accelerometer();
+    torso_imu_state_buffer_.SetData(imu_tmp);
 }
 
 void UnitreeController::SportStateHandler(const void* message) {
@@ -351,6 +376,8 @@ int main(int argc, char const* argv[]) {
     config.lowstate_topic = "rt/lowstate";
     config.enable_odometry = false;
     config.sport_state_topic = "rt/odommodestate";
+    config.enable_torso_imu = true;
+    config.torso_imu_topic = "rt/secondary_imu";
     config.stiffness = {1.0, 1.0, 1.0};  // Example stiffness values
     config.damping = {0.1, 0.1, 0.1};    // Example damping values
     config.num_dofs = 3;                 // Example number of DOFs

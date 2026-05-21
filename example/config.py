@@ -20,6 +20,9 @@ class UnitreeConfig(Config):
     enable_odometry: bool = True
     sport_state_topic: str = "rt/odommodestate"
 
+    enable_torso_imu: bool = True
+    torso_imu_topic: str = "rt/secondary_imu"
+
 # Config for G1 robot
 class RobotConfig(Config):
     unitree: UnitreeConfig = UnitreeConfig()
