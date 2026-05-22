@@ -1,3 +1,4 @@
+import warnings
 from typing import List
 
 from .unitree_cpp import UnitreeController
@@ -5,6 +6,21 @@ from .unitree_cpp import ImuState as _ImuState
 from .unitree_cpp import MotorState as _MotorState
 from .unitree_cpp import RobotState as _RobotState
 from .unitree_cpp import SportState as _SportState
+
+try:
+    from .unitree_cpp import __is_dummy__ as _IS_DUMMY
+except ImportError:  # older builds without the flag
+    _IS_DUMMY = False
+
+if _IS_DUMMY:
+    # Built against the dummy SDK (USE_DUMMY_SDK=ON): no hardware/DDS, simulated
+    # data. Warn loudly so a test build is never mistaken for a real one.
+    warnings.warn(
+        "unitree_cpp was built against the DUMMY SDK: no real hardware or DDS, "
+        "all sensor data is simulated. For testing only — never deploy to a robot.",
+        RuntimeWarning,
+        stacklevel=2,
+    )
 
 
 class MotorState(_MotorState):
