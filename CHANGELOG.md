@@ -13,7 +13,7 @@
 - Add torso (secondary) IMU subscription, exposed via `RobotState.torso_imu_state`. see https://github.com/HansZ8/unitree_cpp/issues/5
     - Opt-in via `enable_torso_imu` / `torso_imu_topic` (default `rt/secondary_imu`).
 
-### Unreleased
+### dummy_sdk (opt-in)
 - Add a bundled header-only dummy `unitree_sdk2` (`dummy_sdk/`) so the module can
   build and import on machines without the real SDK (e.g. macOS). Opt-in via
   `-DUSE_DUMMY_SDK=ON`; a normal build still requires the real SDK and fails
