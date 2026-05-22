@@ -114,6 +114,13 @@ void bind_UnitreeController(py::module_& m) {
 PYBIND11_MODULE(unitree_cpp, m) {
     m.doc() = "pybind11 bindings for UnitreeController";
 
+    // True when built against the bundled dummy SDK (test only, simulated data).
+#ifdef USE_DUMMY_SDK
+    m.attr("__is_dummy__") = true;
+#else
+    m.attr("__is_dummy__") = false;
+#endif
+
     // bind_ControlMode(m);
     bind_UnitreeConfig(m);
     bind_RobotState(m);
